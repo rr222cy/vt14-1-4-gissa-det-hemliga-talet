@@ -22,6 +22,24 @@ namespace GuessTheNumber {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
+        /// GuessesLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label GuessesLabel;
+        
+        /// <summary>
+        /// GuessStatusLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label GuessStatusLabel;
+        
+        /// <summary>
         /// NewNumberButton control.
         /// </summary>
         /// <remarks>

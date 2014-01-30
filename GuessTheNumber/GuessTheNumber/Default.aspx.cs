@@ -11,11 +11,16 @@ namespace GuessTheNumber
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            // If the HTML5-focus attribute fails, awesomeness saves the day.
+            NumberGuessTextBox.Focus();
         }
 
         protected void GuessButton_Click(object sender, EventArgs e)
         {
+            if(IsValid)
+            {
+                GuessStatusLabel.Text = "För högt!";
+            }
             // Wow, such awesome!
         }
 
