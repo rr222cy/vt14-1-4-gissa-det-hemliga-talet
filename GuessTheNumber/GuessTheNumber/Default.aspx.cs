@@ -13,5 +13,15 @@ namespace GuessTheNumber
         {
 
         }
+
+        protected void GuessButton_Click(object sender, EventArgs e)
+        {
+            // Wow, such awesome!
+        }
+
+        protected void NewNumberButton_Click(object sender, EventArgs e)
+        {
+            // Much click.
+        }
     }
 }
