@@ -15,9 +15,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GuessTheNumber.Models.SecretNumber">
-    <Position X="2.75" Y="3" Width="2.25" />
+    <Position X="2.75" Y="3" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAgBAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAACAUAAAAQAAAIAAAAAAIAAAgBAAAA=</HashCode>
       <FileName>Models\SecretNumber.cs</FileName>
     </TypeIdentifier>
   </Class>
