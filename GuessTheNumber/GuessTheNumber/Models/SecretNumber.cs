@@ -53,6 +53,9 @@ namespace GuessTheNumber.Models
             }
             else
             {
+                // A guess has been made.
+                Count += 1;
+
                 if (guess > _number)
                 {
                     return Outcome.High;
