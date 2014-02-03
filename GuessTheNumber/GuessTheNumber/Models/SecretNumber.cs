@@ -23,9 +23,12 @@ namespace GuessTheNumber.Models
         public const int MaxNumberOfGuesses = 8;
 
         // The properties for the class.
-        public bool CanMakeGuess { get; }
-        public int Count { get; }
-        public int? Number { get; }
+        public bool CanMakeGuess { get; set; }
+        public int Count { get; set; }
+        public int? Number 
+        {
+            get { return _number; }
+        }
         public Outcome Outcome { get; set; }
         public IEnumerable<int> PreviousGuesses
         {
@@ -35,29 +38,40 @@ namespace GuessTheNumber.Models
         // The methods for the class.
         public void Initialize()
         {
-
+            // Randomizing a number between 1 and 100.
+            Random randomNumber = new Random();
+            _number = randomNumber.Next(1, 101);
+            Count = 0;
         }
 
         public Outcome MakeGuess(int guess)
         {
-            if (guess > _number)
+            // Validating that the input is within range and that no more guesses than allowed has been done.
+            if (guess < 1 || guess > 100 || Count > MaxNumberOfGuesses - 1)
             {
-                return Outcome.High;
-            }
-            else if (guess < _number)
-            {
-                return Outcome.Low;
+                throw new ArgumentOutOfRangeException();
             }
             else
             {
-                return Outcome.Correct;
-            }
+                if (guess > _number)
+                {
+                    return Outcome.High;
+                }
+                else if (guess < _number)
+                {
+                    return Outcome.Low;
+                }
+                else
+                {
+                    return Outcome.Correct;
+                }
+            }         
         }
 
         // The constructors for the class.
         public SecretNumber()
         {
-
+            Initialize();
         }
     }
 }
