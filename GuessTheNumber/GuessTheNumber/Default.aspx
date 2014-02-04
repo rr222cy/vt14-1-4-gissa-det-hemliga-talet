@@ -17,9 +17,11 @@
             <section>
 
                 <%-- Presentation of guesses, also dynamicly adds restartbutton on game over. --%>
-                <div id="tempTableDiv">
-                    <asp:Label ID="GuessesLabel" runat="server" Text=""></asp:Label>
+                <div id="guessesDiv">
                     <div>
+                        <asp:Label ID="GuessesLabel" runat="server" Text=""></asp:Label>
+                    </div>
+                    <div class="guessesSpacing">
                         <asp:Label ID="GuessStatusLabel" runat="server" Text=""></asp:Label>
                     </div>
                     <div>

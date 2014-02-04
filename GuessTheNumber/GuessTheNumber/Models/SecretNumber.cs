@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,7 +21,7 @@ namespace GuessTheNumber.Models
         // The fields for the class.
         private int _number;
         private List<int> _previousGuesses = new List<int>();
-        public const int MaxNumberOfGuesses = 8;
+        public const int MaxNumberOfGuesses = 7;
 
         // The properties for the class.
         public bool CanMakeGuess { get; set; }
@@ -30,9 +31,13 @@ namespace GuessTheNumber.Models
             get { return _number; }
         }
         public Outcome Outcome { get; set; }
-        public IEnumerable<int> PreviousGuesses
+
+        public IReadOnlyCollection<int> PreviousGuesses
         {
-            get { return _previousGuesses; }
+            get
+            {
+                return _previousGuesses.AsReadOnly();
+            }
         }
 
         // The methods for the class.
@@ -43,24 +48,27 @@ namespace GuessTheNumber.Models
             _number = randomNumber.Next(1, 101);
             _previousGuesses.Clear();
             Outcome = Outcome.Indefinite;
+            CanMakeGuess = true;
             Count = 0;
         }
 
         public Outcome MakeGuess(int guess)
         {
-            _previousGuesses.Add(guess);
             // Validating that the input is within range and that no more guesses than allowed has been done.
             if (guess < 1 || guess > 100)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else if (Count > MaxNumberOfGuesses - 1)
+            else if (guess != _number && Count == MaxNumberOfGuesses - 1 || CanMakeGuess == false)
             {
+                // Adds the guess to the list.
+                _previousGuesses.Add(guess);
+                CanMakeGuess = false;
                 return Outcome.NoMoreGuesses;
             }
             else
             {
-                // A guess has been made.
+                _previousGuesses.Add(guess);
                 Count += 1;
 
                 if (guess > _number)
@@ -73,14 +81,16 @@ namespace GuessTheNumber.Models
                 }
                 else
                 {
+                    CanMakeGuess = false;
                     return Outcome.Correct;
-                }
-            }         
+                }                             
+            }                  
         }
 
         // The constructors for the class.
         public SecretNumber()
         {
+            _previousGuesses = new List<int>(MaxNumberOfGuesses);
             Initialize();
         }
     }

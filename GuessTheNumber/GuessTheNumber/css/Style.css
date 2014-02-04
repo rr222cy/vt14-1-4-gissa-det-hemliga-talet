@@ -49,10 +49,13 @@ section {
     margin: 0px auto;
 }
 
-#tempTableDiv {
+#guessesDiv {
     width: 400px;
     float: right;
-    
+}
+
+.guessesSpacing {
+    margin-top: 30px;
 }
 
 
