@@ -46,16 +46,23 @@ namespace GuessTheNumber
                 // Looping out the previous guesses and presents them for the user.
                 foreach (int i in RandomNumber.PreviousGuesses)
                 {
-                    GuessesLabel.Text += i.ToString() + " ";
+                    GuessesLabel.Text += String.Format("{0} ", i);
                 }
 
                 if (guessResult == Outcome.High)
                 {
-                    GuessStatusLabel.Text = "För högt!" + RandomNumber.Number;    
+                    GuessStatusLabel.Text = "För högt!";
+                    NumberGuessTextBox.Text = "";
                 }
                 else if (guessResult == Outcome.Low)
                 {
                     GuessStatusLabel.Text = "För lågt!";
+                    NumberGuessTextBox.Text = "";
+                }
+                else if (guessResult == Outcome.PreviousGuess)
+                {
+                    GuessStatusLabel.Text = "Du har redan gissat på detta tal!";
+                    NumberGuessTextBox.Text = "";
                 }
                 else if (guessResult == Outcome.Correct)
                 {

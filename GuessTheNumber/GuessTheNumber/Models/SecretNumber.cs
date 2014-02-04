@@ -68,6 +68,11 @@ namespace GuessTheNumber.Models
             }
             else
             {
+                if (PreviousGuesses.Contains(guess))
+                {
+                    return Outcome.PreviousGuess;
+                }
+
                 _previousGuesses.Add(guess);
                 Count += 1;
 
@@ -78,7 +83,7 @@ namespace GuessTheNumber.Models
                 else if (guess < _number)
                 {
                     return Outcome.Low;
-                }
+                }                
                 else
                 {
                     CanMakeGuess = false;
