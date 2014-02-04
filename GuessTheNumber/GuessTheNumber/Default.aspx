@@ -25,7 +25,7 @@
                         <asp:Label ID="GuessStatusLabel" runat="server" Text=""></asp:Label>
                     </div>
                     <div>
-                        <asp:Button ID="NewNumberButton" runat="server" Text="Slumpa nytt hemligt tal" Visible="false" OnClick="NewNumberButton_Click"></asp:Button>
+                        <asp:Button ID="NewNumberButton" runat="server" Text="Slumpa nytt hemligt tal" Visible="false" OnClick="NewNumberButton_Click" CausesValidation="False"></asp:Button>
                     </div>
                 </div>
 
@@ -33,8 +33,8 @@
                 <div>
                 <asp:Label ID="Label1" runat="server" Text="Ange ett tal mellan 1 och 100: " AssociatedControlID="NumberGuessTextBox"></asp:Label>
                 <asp:TextBox ID="NumberGuessTextBox" runat="server" autofocus="autofocus"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Fyll i ett tal mellan 1-100!" Display="Dynamic" CssClass="field-validation-error" ControlToValidate="NumberGuessTextBox"></asp:RequiredFieldValidator>
-                <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Fyll i ett tal mellan 1-100!" CssClass="field-validation-error" ControlToValidate="NumberGuessTextBox" Display="Dynamic" MinimumValue="1" MaximumValue="100" Type="Integer"></asp:RangeValidator>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="*" Display="Dynamic" CssClass="field-validation-error" ControlToValidate="NumberGuessTextBox"></asp:RequiredFieldValidator>
+                <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="*" CssClass="field-validation-error" ControlToValidate="NumberGuessTextBox" Display="Dynamic" MinimumValue="1" MaximumValue="100" Type="Integer"></asp:RangeValidator>
                 </div>
                 
                 <%-- Button for sending guess. --%>

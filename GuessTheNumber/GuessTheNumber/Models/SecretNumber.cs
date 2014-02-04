@@ -28,9 +28,15 @@ namespace GuessTheNumber.Models
         public int Count { get; set; }
         public int? Number 
         {
-            get { return _number; }
+            get 
+            {
+                if (CanMakeGuess)
+                {
+                    return null;
+                }
+                return _number; 
+            }
         }
-        public Outcome Outcome { get; set; }
 
         public IReadOnlyCollection<int> PreviousGuesses
         {
@@ -47,7 +53,6 @@ namespace GuessTheNumber.Models
             Random randomNumber = new Random();
             _number = randomNumber.Next(1, 101);
             _previousGuesses.Clear();
-            Outcome = Outcome.Indefinite;
             CanMakeGuess = true;
             Count = 0;
         }

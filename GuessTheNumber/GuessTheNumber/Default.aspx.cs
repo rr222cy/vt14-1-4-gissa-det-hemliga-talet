@@ -13,20 +13,24 @@ namespace GuessTheNumber
     {
         private SecretNumber RandomNumber
         {
-            get { return Session["randomNumber"] as SecretNumber; }
-            set { Session["randomNumber"] = value; }
+            get
+            {
+                if (Session["randomNumber"] == null)
+                {
+                    Session["randomNumber"] = new SecretNumber();
+                    return Session["randomNumber"] as SecretNumber;
+                }
+                else
+                {
+                    return Session["randomNumber"] as SecretNumber;
+                }
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             // If the HTML5-focus attribute fails, awesomeness saves the day (or JavaScript).
             NumberGuessTextBox.Focus();
-
-            // Checking if a session with a randomized number has been created and set, if not it will be.
-            if (RandomNumber == null)
-            {
-                RandomNumber = new SecretNumber();
-            }
 
             // Preventing the user from double-posting, or closing/opening window and re-enabling controls.
             if (RandomNumber.CanMakeGuess == false)
@@ -40,43 +44,52 @@ namespace GuessTheNumber
             // If everything validates we start the awesome.
             if (IsValid)
             {
-                // Making the guess, than presenting the result for the user.
-                var guessResult = RandomNumber.MakeGuess(Int32.Parse(NumberGuessTextBox.Text));
+                // Makes sure a game is not already running, in that case the user will have to restart first.
+                if (RandomNumber.CanMakeGuess == true)
+                {
+                    // Making the guess, than presenting the result for the user.
+                    var guessResult = RandomNumber.MakeGuess(Int32.Parse(NumberGuessTextBox.Text));
+                
+                    // Looping out the previous guesses and presents them for the user.
+                    foreach (int i in RandomNumber.PreviousGuesses)
+                    {
+                        GuessesLabel.Text += String.Format("{0} ", i);
+                    }
 
-                // Looping out the previous guesses and presents them for the user.
-                foreach (int i in RandomNumber.PreviousGuesses)
-                {
-                    GuessesLabel.Text += String.Format("{0} ", i);
+                    if (guessResult == Outcome.High)
+                    {
+                        GuessStatusLabel.Text = "För högt!";
+                        NumberGuessTextBox.Text = "";
+                    }
+                    else if (guessResult == Outcome.Low)
+                    {
+                        GuessStatusLabel.Text = "För lågt!";
+                        NumberGuessTextBox.Text = "";
+                    }
+                    else if (guessResult == Outcome.PreviousGuess)
+                    {
+                        GuessStatusLabel.Text = "Du har redan gissat på detta tal!";
+                        NumberGuessTextBox.Text = "";
+                    }
+                    else if (guessResult == Outcome.Correct)
+                    {
+                        GuessStatusLabel.Text = String.Format("Rätt! Du klarade det på {0} försök!", RandomNumber.Count);
+                        DisableInput();
+                    }
+                    else if (guessResult == Outcome.NoMoreGuesses)
+                    {
+                        GuessStatusLabel.Text = String.Format("Inga gissningar kvar. Det hemliga talet var {0}.", RandomNumber.Number);
+                        DisableInput();
+                    }
                 }
-
-                if (guessResult == Outcome.High)
+                else
                 {
-                    GuessStatusLabel.Text = "För högt!";
-                    NumberGuessTextBox.Text = "";
-                }
-                else if (guessResult == Outcome.Low)
-                {
-                    GuessStatusLabel.Text = "För lågt!";
-                    NumberGuessTextBox.Text = "";
-                }
-                else if (guessResult == Outcome.PreviousGuess)
-                {
-                    GuessStatusLabel.Text = "Du har redan gissat på detta tal!";
-                    NumberGuessTextBox.Text = "";
-                }
-                else if (guessResult == Outcome.Correct)
-                {
-                    GuessStatusLabel.Text = String.Format("Rätt! Du klarade det på {0} försök!", RandomNumber.Count);
-                    DisableInput();
-                }
-                else if (guessResult == Outcome.NoMoreGuesses)
-                {
-                    GuessStatusLabel.Text = String.Format("Inga gissningar kvar. Det hemliga talet var {0}.", RandomNumber.Number);
-                    DisableInput();
+                    GuessStatusLabel.Text = "Game Over. Klicka på knappen för att spela igen";
                 }
             }   
         }
 
+        // Method for enabling and disabling fields acoording to game completion.
         public void DisableInput()
         {
             GuessButton.Enabled = false;
