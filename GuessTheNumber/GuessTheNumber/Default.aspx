@@ -19,8 +19,12 @@
                 <%-- Presentation of guesses, also dynamicly adds restartbutton on game over. --%>
                 <div id="tempTableDiv">
                     <asp:Label ID="GuessesLabel" runat="server" Text=""></asp:Label>
-                    <asp:Label ID="GuessStatusLabel" runat="server" Text=""></asp:Label>
-                    <asp:Button ID="NewNumberButton" runat="server" Text="Slumpa nytt hemligt tal" Visible="false" OnClick="NewNumberButton_Click"></asp:Button>
+                    <div>
+                        <asp:Label ID="GuessStatusLabel" runat="server" Text=""></asp:Label>
+                    </div>
+                    <div>
+                        <asp:Button ID="NewNumberButton" runat="server" Text="Slumpa nytt hemligt tal" Visible="false" OnClick="NewNumberButton_Click"></asp:Button>
+                    </div>
                 </div>
 
                 <%-- Input for guess with validation (int, range 1-100). --%>

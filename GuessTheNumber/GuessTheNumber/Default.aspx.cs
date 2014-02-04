@@ -4,14 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using GuessTheNumber.Models;
 
 namespace GuessTheNumber
 {
     public partial class Default : System.Web.UI.Page
     {
-        private int? RandomNumber
+        private SecretNumber RandomNumber
         {
-            get { return Session["randomNumber"] as int?; }
+            get { return Session["randomNumber"] as SecretNumber; }
             set { Session["randomNumber"] = value; }
         }
 
@@ -27,20 +28,42 @@ namespace GuessTheNumber
             if (IsValid)
             {
                 // Checking if a session with a randomized number has been created and set, if not it will be.
-                if (RandomNumber.HasValue)
+                if (RandomNumber == null)
                 {
-                    GuessStatusLabel.Text = "För högt!"; 
+                    RandomNumber = new SecretNumber();
+                }              
+
+                // Making the guess, than presenting the result for the user.
+                var guessResult = RandomNumber.MakeGuess(Int32.Parse(NumberGuessTextBox.Text));
+                if (guessResult == Outcome.High)
+                {
+                    GuessStatusLabel.Text = "För högt!";
                 }
-                else
+                else if (guessResult == Outcome.Low)
                 {
-                    RandomNumber = 1;
+                    GuessStatusLabel.Text = "För lågt!";
+                }
+                else if (guessResult == Outcome.Correct)
+                {
+                    GuessStatusLabel.Text = "Rätt!";
+                    GuessButton.Enabled = false;
+                    NumberGuessTextBox.Enabled = false;
+                    NewNumberButton.Visible = true;
+                }
+                else if (guessResult == Outcome.NoMoreGuesses)
+                {
+                    GuessStatusLabel.Text = "Du har inga fler gissningar kvar!";
+                    GuessButton.Enabled = false;
+                    NumberGuessTextBox.Enabled = false;
+                    NewNumberButton.Visible = true;                
                 }
             }   
         }
 
         protected void NewNumberButton_Click(object sender, EventArgs e)
         {
-            // Much click.
+            NumberGuessTextBox.Text = "";
+            RandomNumber.Initialize();
         }
     }
 }

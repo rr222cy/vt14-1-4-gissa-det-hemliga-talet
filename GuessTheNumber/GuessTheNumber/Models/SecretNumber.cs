@@ -41,15 +41,22 @@ namespace GuessTheNumber.Models
             // Randomizing a number between 1 and 100.
             Random randomNumber = new Random();
             _number = randomNumber.Next(1, 101);
+            _previousGuesses.Clear();
+            Outcome = Outcome.Indefinite;
             Count = 0;
         }
 
         public Outcome MakeGuess(int guess)
         {
+            _previousGuesses.Add(guess);
             // Validating that the input is within range and that no more guesses than allowed has been done.
-            if (guess < 1 || guess > 100 || Count > MaxNumberOfGuesses - 1)
+            if (guess < 1 || guess > 100)
             {
                 throw new ArgumentOutOfRangeException();
+            }
+            else if (Count > MaxNumberOfGuesses - 1)
+            {
+                return Outcome.NoMoreGuesses;
             }
             else
             {
