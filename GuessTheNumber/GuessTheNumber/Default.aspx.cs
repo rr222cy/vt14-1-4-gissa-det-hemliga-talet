@@ -95,6 +95,7 @@ namespace GuessTheNumber
             GuessButton.Enabled = false;
             NumberGuessTextBox.Enabled = false;
             NewNumberButton.Visible = true;
+            NewNumberButton.Focus();
         }
 
         protected void NewNumberButton_Click(object sender, EventArgs e)
